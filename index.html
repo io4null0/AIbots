@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .chat-container { max-width: 500px; margin: 20px auto; }
+    .chat-log { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
+    .chat-input { width: calc(100% - 80px); padding: 10px; }
+    .chat-button { width: 70px; padding: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div id="chat-log" class="chat-log"></div>
+  <input type="text" id="chat-input" class="chat-input" placeholder="Type a message">
+  <button id="chat-button" class="chat-button">Send</button>
+</div>
+
+<script>
+  document.getElementById('chat-button').addEventListener('click', function() {
+    const input = document.getElementById('chat-input').value;
+    if (input.trim()) {
+      const log = document.getElementById('chat-log');
+      log.innerHTML += '<div><strong>You:</strong> ' + input + '</div>';
+      document.getElementById('chat-input').value = '';
+      
+      // AIからの返信（ここでAPIを呼び出すなどの処理を追加可能）
+      setTimeout(function() {
+        log.innerHTML += '<div><strong>Bot:</strong> ' + getBotResponse(input) + '</div>';
+        log.scrollTop = log.scrollHeight;
+      }, 1000);
+    }
+  });
+
+  function getBotResponse(message) {
+    // シンプルな応答ロジック（AI APIと統合可能）
+    if (message.toLowerCase().includes('hello')) {
+      return 'Hello! How can I help you today?';
+    } else {
+      return 'I am just a simple bot!';
+    }
+  }
+</script>
+
+</body>
+</html>
