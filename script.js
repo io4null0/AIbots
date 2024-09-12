@@ -3,7 +3,7 @@ async function getBotResponse(message) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_API_KEY'
+      'Authorization': 'Bearer AIzaSyDUyxmHTnKZRAgQllVkNG6Ej2ScrEA72Q0'
     },
     body: JSON.stringify({
       prompt: message,
