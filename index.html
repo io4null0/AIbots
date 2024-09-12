@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatbot</title>
+  <title>Gemini Chatbot</title>
   <style>
     body { font-family: Arial, sans-serif; }
     .chat-container { max-width: 500px; margin: 20px auto; }
@@ -28,20 +28,34 @@
       log.innerHTML += '<div><strong>You:</strong> ' + input + '</div>';
       document.getElementById('chat-input').value = '';
       
-      // AIからの返信（ここでAPIを呼び出すなどの処理を追加可能）
-      setTimeout(function() {
-        log.innerHTML += '<div><strong>Bot:</strong> ' + getBotResponse(input) + '</div>';
+      // Gemini APIへのリクエスト
+      getBotResponse(input).then(response => {
+        log.innerHTML += '<div><strong>Bot:</strong> ' + response + '</div>';
         log.scrollTop = log.scrollHeight;
-      }, 1000);
+      });
     }
   });
 
-  function getBotResponse(message) {
-    // シンプルな応答ロジック（AI APIと統合可能）
-    if (message.toLowerCase().includes('hello')) {
-      return 'Hello! How can I help you today?';
+  async function getBotResponse(message) {
+    const apiKey = 'AIzaSyDUyxmHTnKZRAgQllVkNG6Ej2ScrEA72Q0'; // あなたのGemini APIキーをここに挿入
+    const apiUrl = 'https://api.gemini.ai/v1/chat'; // 仮のURL、正確なURLはGeminiのドキュメントを参照
+    
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
+      body: JSON.stringify({
+        message: message
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.reply; // ここで返ってくるレスポンスの構造に応じて変更
     } else {
-      return 'I am just a simple bot!';
+      return 'Sorry, something went wrong.';
     }
   }
 </script>
